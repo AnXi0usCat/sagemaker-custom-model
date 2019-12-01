@@ -1,0 +1,5 @@
+numpy
+pandas
+lightgbm
+awscli
+sagemaker 
