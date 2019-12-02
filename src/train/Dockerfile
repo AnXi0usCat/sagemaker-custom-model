@@ -22,8 +22,8 @@ RUN bash -c 'mkdir -p /opt/ml/{input, output, model}'
 COPY train.py /opt/ml/train.py
 COPY serve.py /opt/ml/serve.py
 COPY hyperparameters.json opt/ml/input/config/hyperparameters.json
-COPY training /opt/ml/input/data/training/training.csv
-COPY validation /opt/ml/input/data/validation/validation.csv
+COPY data/training /opt/ml/input/data/training/training.csv
+COPY data/validation /opt/ml/input/data/validation/validation.csv
 
 RUN mkdir /opt/ml/output && \
     mkdir /opt/ml/model  && \
