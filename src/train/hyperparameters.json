@@ -1,0 +1,1 @@
+{"num_leaves": 12, "objective": "multiclass", "num_class": 3, "metric": "multi_logloss", "seed": 7, "learning_rate": 0.01, "verbose": -1, "num_boost_round": 3000, "early_stopping_rounds": 10}
