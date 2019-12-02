@@ -16,7 +16,10 @@ RUN python3.6 -m pip install wheel
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
-COPY lightgbm.py /opt/ml/lightgbm.py
+COPY train_model.py /opt/ml/train_model.py
 COPY rest_api.py /opt/ml/rest_api.py
+COPY iris.csv /opt/ml/iris.csv
 
-ENTRYPOINT ["/usr/bin/python3", "/opt/ml/lightgbm.py"]
+WORKDIR /opt/ml
+
+ENTRYPOINT ["python3.6", "/opt/ml/train_model.py"]
