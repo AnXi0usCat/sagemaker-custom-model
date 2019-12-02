@@ -16,10 +16,13 @@ RUN python3.6 -m pip install wheel
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
-COPY train_model.py /opt/ml/train_model.py
-COPY rest_api.py /opt/ml/rest_api.py
-COPY iris.csv /opt/ml/iris.csv
+#COPY train_model.py /opt/ml/train_model.py
+#COPY rest_api.py /opt/ml/rest_api.py
+#COPY iris.csv /opt/ml/iris.csv
+
+COPY train.py /opt/ml/train.py
+COPY serve.py /opt/ml/serve.py
 
 WORKDIR /opt/ml
 
-ENTRYPOINT ["python3.6", "/opt/ml/train_model.py"]
+ENTRYPOINT ["python3.6", "/opt/ml/train.py"]

@@ -23,10 +23,11 @@ def get_data_splits(dataframe, valid_fraction=0.1):
     test = dataframe[-valid_size:]
     return train, valid, test
 
-def serve():
+def serve(valid, feature_cols):
     # load model with pickle to predict
-    with open('model.pkl', 'rb') as fin:
+    with open('/opt/ml/lightgbm.pkl', 'rb') as fin:
         pkl_bst = pickle.load(fin)
+    print(pkl_bst.predict(valid[feature_cols]))
 
 if __name__ == '__main__':
     iris = pd.read_csv('iris.csv')
@@ -44,10 +45,11 @@ if __name__ == '__main__':
         'num_class': 3,
         'metric': 'multi_logloss', 
         'seed': 7, 
-        'learning_rate': 0.01}
+        'learning_rate': 0.01,
+	'verbose': -1}
     print("Training model!")
     bst = lgb.train(param, dtrain, num_boost_round=3000, valid_sets=[dvalid], 
-                    early_stopping_rounds=10, verbose_eval=False)
+                    early_stopping_rounds=10, verbose_eval=True)
 
     valid_pred = bst.predict(valid[feature_cols])
     pred_class = [np.argmax(line) for line in valid_pred]
@@ -55,6 +57,6 @@ if __name__ == '__main__':
     print('Validation set accuracy is: {}'.format(accuracy))
 
     print('saving the model as a pickle file')
-    with open('lightgbm.pkl', 'wb') as fout:
+    with open('/opt/ml/lightgbm.pkl', 'wb') as fout:
         pickle.dump(bst, fout)
 
