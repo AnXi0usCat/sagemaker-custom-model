@@ -104,7 +104,7 @@ def train():
                           verbose_eval=True)
         
         # save the trained model
-        with open(os.path.join(model_path, 'decision-tree-model.pkl'), 'w') as out:
+        with open(os.path.join(model_path, 'light-gbm-model.pkl'), 'w') as out:
             pickle.dump(clf, out)
         print('Training complete.')   
     except Exception as e:
