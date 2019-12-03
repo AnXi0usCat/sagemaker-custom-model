@@ -19,8 +19,8 @@ RUN pip3 install -r requirements.txt
 # this for testing locally
 RUN bash -c 'mkdir -p /opt/ml/{input, output, model}'
 
-COPY train.py /opt/ml/train.py
-COPY serve.py /opt/ml/serve.py
+COPY lightgbm /opt/program
+
 COPY hyperparameters.json opt/ml/input/config/hyperparameters.json
 COPY data/training /opt/ml/input/data/training/training.csv
 COPY data/validation /opt/ml/input/data/validation/validation.csv
@@ -29,6 +29,5 @@ RUN mkdir /opt/ml/output && \
     mkdir /opt/ml/model  && \
     mkdir /opt/ml/output/failure
 
-WORKDIR /opt/ml
-
-ENTRYPOINT ["python3.6", "/opt/ml/train.py"]
+RUN chmod +x /opt/program/train.py
+WORKDIR /opt/program
