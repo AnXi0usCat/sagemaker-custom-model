@@ -1,0 +1,6 @@
+pandas
+flask
+gunicorn
+gevent
+lightgbm==2.3.0
+sklearn

@@ -5,11 +5,11 @@ import os
 import pickle
 import lightgbm
 
-prefix = '/opt/ml'
+prefix = '/opt/ml/'
 model_path = os.path.join(prefix, 'model')
 
 
-class Predictor:
+class Predictor(object):
     model = None
        
     @classmethod
@@ -18,18 +18,17 @@ class Predictor:
         Load the model file from the model directory
         """
         if cls.model is None:
-            with (os.path.join(model_path, 'light-gbm-model.pkl')) as input:
+            with open(os.path.join(model_path, 'light-gbm-model.pkl'), 'r') as input:
                 cls.model = pickle.load(input)
+        return cls.model
     
     @classmethod
     def predict(cls, input):
         """
         Make a prediction with the lightgbm model
         """
-        if cls.model is None:
-            cls.model = get_model()
-        
-        return model.predcit(input)
+        model = cls.get_model()
+        return model.predict(input)
 
 
 app = flask.Flask(__name__)
@@ -60,7 +59,7 @@ def transformation():
             'petal_length': content['petal_length'],
             'petal_width': content['petal_width']
         }
-        output = Predictor.predcit(pd.DataFrame(data, index=[0]))
+        output = Predictor.predict(pd.DataFrame(data, index=[0]))
         output = list(output[0])
         return flask.Response(
             response=json.dumps({'prediction': output}), 
@@ -74,6 +73,3 @@ def transformation():
             mimetype='application/json'
         )
     
-
-if __name__ == '__main__':
-    app.run(debug=True)
